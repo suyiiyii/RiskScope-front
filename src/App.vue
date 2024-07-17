@@ -1,59 +1,32 @@
 <script setup lang="ts">
 import { RouterView } from 'vue-router'
+import BaseAside from '@/components/layouts/BaseAside.vue'
+import BaseHeader from '@/components/layouts/BaseHeader.vue'
 </script>
 
 <template>
-  <el-container>
-    <el-header>
-      <el-menu
-        :default-active="1"
-        class="el-menu-demo"
-        mode="horizontal"
-      >
-        <el-menu-item index="1">风险识别系统</el-menu-item>
-      </el-menu>
-
-    </el-header>
-    <el-container>
-      <el-aside width="200px">
-        <el-menu
-          default-active="1"
-          class="el-menu-vertical-demo"
-        >
-          <el-menu-item index="1">
-            <el-icon>
-              <House />
-            </el-icon>
-            主页
-          </el-menu-item>
-          <el-menu-item index="2">
-            <el-icon>
-              <ZoomIn />
-            </el-icon>
-            风险识别
-          </el-menu-item>
-          <el-menu-item index="3">
-            <el-icon>
-              <View />
-            </el-icon>
-            历史记录
-          </el-menu-item>
-        </el-menu>
-
-      </el-aside>
+  <el-container class="flex main-container" style="flex-direction: column">
+    <BaseHeader />
+    <el-container class="flex">
       <el-container>
-        <el-main>
-          <div>
+        <BaseAside />
+        <el-container>
+          <el-main>
 
             <RouterView />
-          </div>
-        </el-main>
-        <!--          <el-footer>Footer</el-footer>-->
+
+          </el-main>
+          <!--          <el-footer>Footer</el-footer>-->
+        </el-container>
       </el-container>
     </el-container>
   </el-container>
 </template>
 
+
 <style scoped>
 
+.main-container {
+  height: 100vh;
+}
 </style>
