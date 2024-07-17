@@ -29,7 +29,9 @@ function useRequest() {
       return response
     },
     (error) => {
-      if (error.response.data) {
+      if (error.message.match('timeout')) {
+        ElMessage.error('请求超时')
+      } else if (error.response.data) {
         ElMessage.error('请求失败：' + error.response.data)
       } else {
         ElMessage.error('网络错误')
