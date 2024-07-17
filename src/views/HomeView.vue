@@ -28,14 +28,9 @@ const login = (username: string, password: string) => {
 const register = (username: string, password: string) => {
   request.post('/user/register',
     {
-      grant_type: 'password',
       username,
       password
-    }, {
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
-      }
-    }).then(() => {
+    }, {}).then(() => {
     login(username, password)
   })
 }
