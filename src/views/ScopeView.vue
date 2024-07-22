@@ -16,7 +16,7 @@ const submit = () => {
       '/task_text',
       {
         scopeType: 'risk',
-        contentType: contentType.value,
+        fileType: contentType.value,
         textContent: contentType.value == 'text' ? textContent.value : ''
       },
       {
@@ -30,8 +30,8 @@ const submit = () => {
       '/task_audio',
       {
         scopeType: 'risk',
-        contentType: contentType.value,
-        audioContent: contentType.value == 'audio' ? audioContent.value.raw : ''
+        fileType: contentType.value,
+        fileContent: contentType.value == 'audio' ? audioContent.value.raw : ''
       },
       {
         headers: {
