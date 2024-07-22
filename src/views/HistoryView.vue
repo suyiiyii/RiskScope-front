@@ -40,14 +40,16 @@ const getHistory = () => {
 
 const getResults = () => {
   for (let item of data.value) {
-    if (item.status !== '已完成' && results.value.find((result) => result.taskId === item.taskId)) {
-      continue
+    if (
+      item.status === '已完成' &&
+      !results.value.find((result) => result.taskId === item.taskId)
+    ) {
+      request()
+        .get(`/result/${item.resultId}`)
+        .then((res) => {
+          results.value.push(res.data)
+        })
     }
-    request()
-      .get(`/result/${item.resultId}`)
-      .then((res) => {
-        results.value.push(res.data)
-      })
   }
 }
 
