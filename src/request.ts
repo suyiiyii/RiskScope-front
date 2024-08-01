@@ -32,7 +32,7 @@ function useRequest() {
       if (error.message.match('timeout')) {
         ElMessage.error('请求超时')
       } else if (error.response.data) {
-        ElMessage.error('请求失败：' + error.response.data)
+        ElMessage.error('请求失败：' + error.response.data.message)
       } else {
         ElMessage.error('网络错误')
       }
