@@ -35,7 +35,7 @@ RUN --mount=type=bind,source=package.json,target=package.json \
 
 COPY . .
 # Run the build script.
-RUN pnpm run build
+RUN pnpm build
 
 ################################################################################
 # Create a new stage to run the application with minimal runtime dependencies
