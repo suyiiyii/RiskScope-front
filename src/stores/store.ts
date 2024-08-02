@@ -9,7 +9,7 @@ export const useStore = defineStore('counter', () => {
     count.value++
   }
 
-  const baseUrl = import.meta.env.VITE_BASE_URL
+  const baseUrl ="/api"
 
   return { count, doubleCount, increment, baseUrl }
 })

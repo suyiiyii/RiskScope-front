@@ -5,15 +5,7 @@ import type { Result, Task } from '@/Models'
 
 const data: Ref<Task[]> = ref([])
 const pageNum = ref('1')
-const results: Ref<Result[]> = ref([
-  {
-    resultId: '91',
-    taskId: '114513',
-    category: ['eu', 'do'],
-    score: 'in exercitation',
-    message: 'dolor sit elit reprehenderit'
-  }
-])
+const results: Ref<Result[]> = ref([])
 
 const tableData = computed(() => {
   return data.value.map((item, index) => {
@@ -25,6 +17,17 @@ const tableData = computed(() => {
 })
 console.log(tableData.value)
 
+const getResults = () => {
+  for (let item of data.value) {
+    if (item.status == '已完成') {
+      request()
+        .get(`/result/${item.resultId}`)
+        .then((res) => {
+          results.value.push(res.data)
+        })
+    }
+  }
+}
 const getHistory = () => {
   request()
     .get('/task', {
@@ -35,32 +38,17 @@ const getHistory = () => {
     })
     .then((res) => {
       data.value = res.data
+      getResults()
     })
 }
 
-const getResults = () => {
-  for (let item of data.value) {
-    if (
-      item.status === '已完成' &&
-      !results.value.find((result) => result.taskId === item.taskId)
-    ) {
-      request()
-        .get(`/result/${item.resultId}`)
-        .then((res) => {
-          results.value.push(res.data)
-        })
-    }
-  }
-}
 
 onMounted(() => {
   getHistory()
-  getResults()
 })
 
 watch(pageNum, () => {
   getHistory()
-  getResults()
   console.log('pageNum changed')
 })
 </script>

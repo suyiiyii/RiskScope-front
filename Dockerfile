@@ -43,17 +43,32 @@ RUN pnpm build
 FROM nginx:stable-alpine as final
 
 # Use production node environment by default.
-ENV NODE_ENV production
 
-# Run the application as a non-root user.
-# USER node
+# 配置spa应用的nginx配置
+RUN cat > /etc/nginx/conf.d/default.conf <<EOF
+server {
+    listen 80;
+    root /usr/share/nginx/html;
 
-# Copy package.json so that package manager commands can be used.
-# COPY package.json .
+    index index.html;
+    location / {
+        try_files \$uri \$uri/ /index.html;
+    }
+    
+    # 转发 /api 请求到本地8080端口
+    location /api {
+        proxy_pass http://backend:8080;
+        proxy_set_header Host \$host;
+        proxy_set_header X-Real-IP \$remote_addr;
+        proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto \$scheme;
 
-# Copy the production dependencies from the deps stage and also
-# the built application from the build stage into the image.
-# COPY --from=deps /usr/src/app/node_modules ./node_modules
+        # 重写路径去掉 /api
+        rewrite ^/api(.*)\$ \$1 break;
+    }
+}
+EOF
+
 COPY --from=build /usr/src/app/dist /usr/share/nginx/html
 
 
