@@ -1,7 +1,5 @@
 <script setup lang="ts">
 import { RouterView } from 'vue-router'
-import BaseAside from '@/components/layouts/BaseAside.vue'
-import BaseHeader from '@/components/layouts/BaseHeader.vue'
 </script>
 
 <template>
